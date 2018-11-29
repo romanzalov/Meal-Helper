@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Recipe from './Recipe';
+import {Link} from 'react-router-dom';
 
 import './App.css';
 import Button from '@material-ui/core/Button';
@@ -11,8 +13,9 @@ class App extends Component {
     super(props);
     this.state = {
       searchInput: '',
-      recipes: [],
+      recipes: ['test'],
       anyRecipeFound: true,
+      students: ['Roman','Murad','Angela','Ellany']
     };
     this.recipeCall = this.recipeCall.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -40,16 +43,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.recipeCall()
-        .then(data => {
-          console.log(data)
-        })
   }
   render() {
     return (
       <div>
       <div className="container">
-
+      <div className = "header">
         <form >
           <input type="text" name="name" className="input-field" onChange={this.handleInput} />
         </form>
@@ -57,6 +56,10 @@ class App extends Component {
           <Button variant="contained" color="primary" >
             Find Me Some Recipes!
           </Button>
+          <Button variant="contained" onClick = {this.recipeCall}>
+            Most popular Recipes!
+          </Button>
+        </div>
         </div>
         <div className = "foundRecipes" >
           {
@@ -70,6 +73,10 @@ class App extends Component {
           }
         </div>
       </div>
+      <Link to = {{
+        pathname: '/recipe',
+        state: this.state.recipes,
+        }}>CLICK ME TO GO TO THE RECIPE</Link>
       </div>
     );
   }
